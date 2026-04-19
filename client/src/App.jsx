@@ -226,13 +226,28 @@ function Av(){
 
 function Bubble({m}){
   const isUser=m.role==="user";
+  const parseInline=(text,key)=>{
+    const parts=[];
+    const re=/\*\*\*(.+?)\*\*\*|\*\*(.+?)\*\*|\*([^*\n]+?)\*|\[([^\]]+)\]\(([^)]+)\)/g;
+    let last=0,m,idx=0;
+    while((m=re.exec(text))!==null){
+      if(m.index>last) parts.push(<span key={`${key}-t${idx++}`}>{text.slice(last,m.index)}</span>);
+      if(m[1]) parts.push(<strong key={`${key}-b${idx++}`} style={{fontWeight:700,fontStyle:"italic",color:"#86efac"}}>{m[1]}</strong>);
+      else if(m[2]) parts.push(<strong key={`${key}-b${idx++}`} style={{fontWeight:700,color:"#86efac"}}>{m[2]}</strong>);
+      else if(m[3]) parts.push(<em key={`${key}-i${idx++}`} style={{fontStyle:"italic",color:"#d1fae5"}}>{m[3]}</em>);
+      else if(m[4]) parts.push(<a key={`${key}-a${idx++}`} href={m[5]} target="_blank" rel="noreferrer" style={{color:"#4ade80",textDecoration:"underline"}}>{m[4]}</a>);
+      last=m.index+m[0].length;
+    }
+    if(last<text.length) parts.push(<span key={`${key}-t${idx++}`}>{text.slice(last)}</span>);
+    return parts.length?parts:text;
+  };
   const renderText=text=>text.split("\n").map((line,i)=>{
     if(!line.trim()) return <div key={i} style={{height:5}}/>;
-    if(/^#{1,3}\s/.test(line)) return <div key={i} style={{fontWeight:700,color:"#4ade80",fontSize:14.5,marginTop:5,marginBottom:2}}>{line.replace(/^#+\s/,"")}</div>;
-    if(/^\*\*(.+)\*\*$/.test(line)) return <div key={i} style={{fontWeight:700,color:"#86efac"}}>{line.replace(/\*\*/g,"")}</div>;
-    if(/^[-•]\s/.test(line)) return <div key={i} style={{paddingLeft:13,color:"#bbf7d0",lineHeight:1.6}}>• {line.slice(2)}</div>;
-    if(/^\d+\.\s/.test(line)) return <div key={i} style={{paddingLeft:13,color:"#bbf7d0",lineHeight:1.6}}>{line}</div>;
-    return <div key={i} style={{lineHeight:1.65}}>{line}</div>;
+    if(/^---+$/.test(line.trim())) return <hr key={i} style={{border:"none",borderTop:"1px solid #1a3a1c",margin:"6px 0"}}/>;
+    if(/^#{1,3}\s/.test(line)) return <div key={i} style={{fontWeight:700,color:"#4ade80",fontSize:14.5,marginTop:5,marginBottom:2}}>{parseInline(line.replace(/^#+\s/,""),i)}</div>;
+    if(/^\*\s/.test(line)||/^-\s/.test(line)) return <div key={i} style={{paddingLeft:13,color:"#bbf7d0",lineHeight:1.65,display:"flex",gap:6}}><span style={{flexShrink:0}}>•</span><span>{parseInline(line.slice(2),i)}</span></div>;
+    if(/^\d+\.\s/.test(line)) return <div key={i} style={{paddingLeft:13,color:"#bbf7d0",lineHeight:1.65}}>{parseInline(line,i)}</div>;
+    return <div key={i} style={{lineHeight:1.65}}>{parseInline(line,i)}</div>;
   });
   return(
     <div style={{display:"flex",gap:9,alignItems:"flex-start",flexDirection:isUser?"row-reverse":"row",animation:"fu .2s ease"}}>
