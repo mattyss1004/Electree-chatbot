@@ -4,8 +4,8 @@ import App from "./App.jsx";
 import LoginPage from "./LoginPage.jsx";
 
 function Root() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  return loggedIn ? <App /> : <LoginPage onLogin={() => setLoggedIn(true)} />;
+  // Temporarily bypass login for testing
+  return <App />;
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
