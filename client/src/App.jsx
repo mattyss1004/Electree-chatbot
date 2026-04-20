@@ -302,12 +302,25 @@ function Welcome({onSelect}){
   const NL={ES:"Electree Solar",TRANSFER:"Přechod Acetex",ACETEX:"Acetex tech",MULTI:"Multi-síť"};
   return(
     <div style={{animation:"fu .35s ease"}}>
-      <div style={{textAlign:"center",padding:"26px 0 20px"}}>
-        <div style={{fontSize:44,filter:"drop-shadow(0 0 16px rgba(34,197,94,.45))",marginBottom:9}}>☀️</div>
-        <div style={{color:"#4ade80",fontSize:19,fontWeight:700,letterSpacing:"-.02em"}}>Dobrý den!</div>
-        <div style={{color:"#4a7a50",fontSize:13,marginTop:5,maxWidth:400,margin:"5px auto 0",lineHeight:1.65}}>
-          Jsem AI asistent Electree Solar. Odpovím na otázky o fotovoltaice, dotacích a servisu — a pomůžu zákazníkům Acetexu s přechodem.
+      {/* Hero Section */}
+      <div style={{textAlign:"center",padding:"32px 18px 28px",background:"linear-gradient(135deg,rgba(34,197,94,.06) 0%,rgba(16,163,74,.03) 100%)",borderBottom:"1px solid rgba(34,197,94,.1)",borderRadius:"0 0 16px 16px",marginBottom:12}}>
+        <div style={{fontSize:48,filter:"drop-shadow(0 0 20px rgba(34,197,94,.4))",marginBottom:14}}>☀️</div>
+        <h1 style={{color:"#e2fce5",fontSize:26,fontWeight:700,letterSpacing:"-.02em",margin:"0 0 8px 0"}}>Vítejte v Electree Solar AI</h1>
+        <p style={{color:"#9ca3af",fontSize:14,margin:"0 0 14px 0",maxWidth:520,marginLeft:"auto",marginRight:"auto",lineHeight:1.7}}>
+          Jsem váš AI asistent pro fotovoltaiku, dotace a servis. Mohu vám pomoci s technickými otázkami, informacemi o programu Nová zelená úsporám, nebo s přechodem ze služeb Acetexu.
+        </p>
+        <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",fontSize:12,color:"#6b7280"}}>
+          <span>💡 Zeptejte se na cokoli</span>
+          <span>•</span>
+          <span>📋 Dotace a financování</span>
+          <span>•</span>
+          <span>🔧 Technická podpora</span>
         </div>
+      </div>
+      
+      {/* Suggestions Section */}
+      <div style={{textAlign:"center",padding:"0 18px 8px",marginBottom:8}}>
+        <div style={{color:"#6b7280",fontSize:12,fontWeight:600,letterSpacing:"0.05em",textTransform:"uppercase"}}>Vyzkoušejte tyto dotazy</div>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7,maxWidth:620,margin:"0 auto"}}>
         {QS.map((q,i)=>(
