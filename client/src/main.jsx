@@ -4,7 +4,12 @@ import App from "./App.jsx";
 import LoginPage from "./LoginPage.jsx";
 
 function Root() {
-  // Temporarily bypass login for testing
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={() => setIsLoggedIn(true)} />;
+  }
+
   return <App />;
 }
 
